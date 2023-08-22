@@ -1,3 +1,9 @@
+
+function toggleComments(postId) {
+    const commentsDiv = document.getElementById(`comments-${postId}`);
+    commentsDiv.classList.toggle('hidden');
+}
+
 async function fetchAndRenderPostsAndComments() {
     const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
     const postsData = await postsResponse.json();
@@ -12,11 +18,6 @@ async function fetchAndRenderPostsAndComments() {
     let startIdx = (currentPage - 1) * postsPerPage;
     let endIdx = startIdx + postsPerPage;
   
-    function toggleComments(postId) {
-        const commentsDiv = document.getElementById(`comments-${postId}`);
-        commentsDiv.classList.toggle('hidden');
-    }
-  
     function renderPosts() {
         postsContainer.innerHTML = '';
   
@@ -27,7 +28,7 @@ async function fetchAndRenderPostsAndComments() {
             postDiv.innerHTML = `
                 <h2>${post.title}</h2>
                 <p>${post.body}</p>
-                <button onclick="toggleComments(${post.id})">Show Comments</button>
+                <button class=commentButton onclick="toggleComments(${post.id})">Show Comments</button>
                 <div id="comments-${post.id}" class="comments hidden">
                     ${renderComments(post.id)}
                 </div>
